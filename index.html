@@ -57,9 +57,63 @@
       display: none;
       margin-top: 1em;
     }
+    #menu-toggle {
+      font-size: 1.5em;
+      cursor: pointer;
+      padding: 10px;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      background: #274e77;
+      color: white;
+      border-radius: 5px;
+    }
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px; /* Hidden by default */
+      width: 250px;
+      height: 100%;
+      background-color: #f0f4f8;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      transition: left 0.3s ease;
+      z-index: 1000;
+      padding: 1rem;
+    }
+    #sidebar.open {
+      left: 0;
+    }
+    #sidebar a, #sidebar button {
+      display: block;
+      margin: 1em 0;
+      text-decoration: none;
+      color: #274e77;
+      font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
   </style>
 </head>
 <body>
+  <div id="menu-toggle">☰</div>
+
+  <div id="sidebar">
+    <div id="sidebar-content">
+      <p id="welcome-message">Welcome, Guest!</p>
+      <div id="guest-options">
+        <a href="login.html">Login</a>
+        <a href="signup.html">Sign Up</a>
+      </div>
+      <div id="user-options" style="display: none;">
+        <button id="logout-button">Log Out</button>
+      </div>
+    </div>
+  </div>
+
   <h1>Proof In Practice</h1>
   <h2>Where logic meets daily discipline</h2>
   <p id="date" style="text-align: left; font-style: italic; margin-bottom: 0.75em;"></p>
@@ -91,11 +145,11 @@
     const hints = [
       "Remember: Even numbers can be written as 2n, so what happens when you add two of them?",
       "Think about the structure of odd numbers, like 2n + 1.",
-      "Vertical angles are formed by two intersecting lines. What do you know about them?",
+      "Vertical angles are formed by two intersecting lines and congruent means the same in shape and size.",
       "If a equals b, and b equals c, can you conclude anything about a and c?",
       "Look at the triangle and identify the sides that are equal.",
-      "Odd numbers are 2n + 1. What happens when you multiply two odd numbers?",
-      "If two quantities are equal, adding the same value to both will maintain equality.",
+      "Odd numbers are defined by 2n + 1. What happens when you multiply two odd numbers?",
+      "If two quantities are equal, adding the same value to both will maintain equality. Now demonstrate.",
       "What do you know about the sum of angles in any triangle?",
       "Multiplying by the same number on both sides of an equation keeps the relationship true.",
       "Even numbers are divisible by 2. What happens when you square one?"
@@ -115,6 +169,25 @@
         hintElement.style.display = 'none';
       }
     };
+
+    document.getElementById("menu-toggle").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.toggle("open");
+    });
+
+    const username = localStorage.getItem("username");
+    if (username) {
+      document.getElementById("welcome-message").innerText = `Welcome, ${username}!`;
+      document.getElementById("guest-options").style.display = "none";
+      document.getElementById("user-options").style.display = "block";
+    } else {
+      document.getElementById("welcome-message").innerText = `Welcome, Guest!`;
+      document.getElementById("guest-options").style.display = "block";
+      document.getElementById("user-options").style.display = "none";
+    }
+    document.getElementById("logout-button").addEventListener("click", () => {
+      localStorage.removeItem("username");
+      window.location.reload();
+    });
   </script>
 </body>
 </html>
