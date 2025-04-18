@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Proof In Practice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Schoolbell&display=swap" rel="stylesheet">
+  <style>
+   h1 {
+     font-family: 'Finger Paint', cursive;
+     font-size: 3em;
+     color: #274e77;
+     margin-top: -2em;
+     margin-bottom: 1em;
+     text-align: center;
+   }
+   h2 {
+     font-family: 'Coming Soon', handwritten;
+     font-size: 1.5em;
+     color: #000000;
+     font-weight: 400;
+     margin-top: -1em;
+     font-style: italic;
+     text-align: center;
+   }
+    body {
+      font-family: 'Times New Roman', serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem;
+      background-color: #fdfdfd;
+    }
+    #proof-box {
+      padding: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      background: #e7ecef;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>Proof In Practice</h1>
+  <h2>Where logic meets daily discipline</h2>
+  <div id="proof-box">
+    <p id="proof">Loading today's proof...</p>
+  </div>
+
+  <script>
+    const proofs = [
+      "Prove that the sum of two even numbers is even.",
+      "Prove that the square of an odd number is odd.",
+      "Prove that vertical angles are congruent.",
+      "Prove that if a = b and b = c, then a = c.",
+      "Prove that the base angles of an isosceles triangle are congruent.",
+      "Prove that the product of two odd numbers is odd.",
+      "Prove that if x = y, then x + z = y + z.",
+      "Prove that angles in a triangle sum to 180°.",
+      "Prove that multiplying both sides of an equation by the same number keeps the equation equal.",
+      "Prove that the square of an even number is even."
+    ];
+
+    const today = new Date();
+    const index = today.getDate() % proofs.length;
+    document.getElementById("proof").innerText = proofs[index];
+  </script>
+</body>
+</html>
