@@ -48,28 +48,32 @@
   </div>
 
   <script>
-    // Set current date
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const todayFull = new Date().toLocaleDateString(undefined, options);
-    document.getElementById('date').innerText = todayFull;
+    // Wait until the document is fully loaded before running the script
+    window.onload = function() {
+      // Set the current date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const todayFull = new Date().toLocaleDateString(undefined, options);
+      document.getElementById('date').innerText = todayFull;
 
-    // Load today's proof
-    const proofs = [
-      "Prove that the sum of two even numbers is even.",
-      "Prove that the square of an odd number is odd.",
-      "Prove that vertical angles are congruent.",
-      "Prove that if a = b and b = c, then a = c.",
-      "Prove that the base angles of an isosceles triangle are congruent.",
-      "Prove that the product of two odd numbers is odd.",
-      "Prove that if x = y, then x + z = y + z.",
-      "Prove that angles in a triangle sum to 180°.",
-      "Prove that multiplying both sides of an equation by the same number keeps the equation equal.",
-      "Prove that the square of an even number is even."
-    ];
+      // Array of proofs
+      const proofs = [
+        "Prove that the sum of two even numbers is even.",
+        "Prove that the square of an odd number is odd.",
+        "Prove that vertical angles are congruent.",
+        "Prove that if a = b and b = c, then a = c.",
+        "Prove that the base angles of an isosceles triangle are congruent.",
+        "Prove that the product of two odd numbers is odd.",
+        "Prove that if x = y, then x + z = y + z.",
+        "Prove that angles in a triangle sum to 180°.",
+        "Prove that multiplying both sides of an equation by the same number keeps the equation equal.",
+        "Prove that the square of an even number is even."
+      ];
 
-    const today = new Date();
-    const index = today.getDate() % proofs.length;
-    document.getElementById("proof").innerText = proofs[index];
+      // Get today's proof based on the current day of the month
+      const today = new Date();
+      const index = today.getDate() % proofs.length;
+      document.getElementById("proof").innerText = proofs[index];
+    };
   </script>
 </body>
 </html>
