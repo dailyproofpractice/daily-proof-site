@@ -41,11 +41,16 @@
 <body>
   <h1>Proof In Practice</h1>
   <h2>Where logic meets daily discipline</h2>
+  <p id="date" style="text-align: center; font-style: italic; margin-bottom: 1em;"></p>
   <div id="proof-box">
     <p id="proof">Loading today's proof...</p>
   </div>
 
   <script>
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const todayFull = new Date().toLocaleDateString(undefined, options);
+    document.getElementById('date').innerText = todayFull;
+
     const proofs = [
       "Prove that the sum of two even numbers is even.",
       "Prove that the square of an odd number is odd.",
