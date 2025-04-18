@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <metachartset="UTF-8">
+  <title>Login - Proof In Practice</title>
+</head>
+  <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Times New Roman', serif;
+      background-color: #fdfdfd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-heigh: 100vh;
+      margin: 0;
+      padding: 2rem;
+    }
+    hi {
+      font-family: 'Finger Paint', cursive;
+      font-size: 2.5em;
+      color: #274e77;
+      margin-bottom: 1rem;
+    }
+    form {
+      background-color: #e7ecef;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+      width: 100%;
+      max-width: 400px;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #274e77;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #274e77;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #1e3d56;
+    }
+    .error {
+        color: red;
+        margin-bottom: 1rem;
+      }
+  </style>
+<body>
+  <h1>Login</h1>
+  <form id="login-form">
+    <div class="error" id="error-message" style="display: none;"></div>
+    <label for="username">Username</label>
+    <input type="text" id="username" required>
+    <label for="password">Password</label>
+    <input type="password" id="password" required>
+    <button type="submit">Login</button>
+  </form>
+  
+  <script>
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevents page refresh
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (username && password) {
+        localStorage.setItem("username", username); // Save to localStorage
+        window.location.href = "index.html"; // Go back to home page
+      } else {
+        document.getElementById("error-message").textContent = "Please enter a valid username and password.";
+        document.getElementById("error-message").style.display = "block";
+      }
+    });
+  </script>
+
+</body>
+</html>
