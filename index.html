@@ -10,7 +10,7 @@
      font-family: 'Finger Paint', cursive;
      font-size: 3em;
      color: #274e77;
-     marhin-top: -2em
+     margin-top: -2em;
      margin-bottom: 1em;
      text-align: center;
    }
@@ -20,19 +20,20 @@
      color: #000000;
      font-weight: 400;
      margin-top: -1em;
-     font-style: Italic;
+     font-style: italic;
      text-align: center;
    }
    h3 {
-     font-family: 'New Times Roman', serif;
+     font-family: 'Times New Roman', serif;
      font-size:1em;
      color: #000000;
      text-align: center;
-     font-style: Italic;
-     margin-bottom: 1em
-     margin-top: 2em
+     font-style: italic;
+     margin-bottom: 1em;
+     margin-top: 2em;
+   }
     body {
-      font-family: 'New Times Roman', serif;
+      font-family: 'Times New Roman', serif;
       max-width: 600px;
       margin: auto;
       padding: 2rem;
@@ -57,8 +58,8 @@
 
   <script>
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const today Full = newDate(). toLocaleDateString(undefined, options);
-    document.getElementById(date').innerText = weekday;
+    const todayFull = new Date(). toLocaleDateString(undefined, options);
+    document.getElementById(date').innerText = todayFull;
     const proofs = [
       "Prove that the sum of two even numbers is even.",
       "Prove that the square of an odd number is odd.",
