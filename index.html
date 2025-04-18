@@ -16,13 +16,21 @@
    }
    h2 {
      font-family: 'Coming Soon', handwritten;
-     font-size: 2em;
+     font-size: 1.5em;
      color: #000000;
      font-weight: 400;
      margin-top: -1em;
      font-style: Italic;
      text-align: center;
    }
+   h3 {
+     font-family: 'New Times Roman', serif;
+     font-size:1em;
+     color: #000000;
+     text-align: center;
+     font-style: Italic;
+     margin-bottom: 1em
+     margin-top: 2em
     body {
       font-family: 'New Times Roman', serif;
       max-width: 600px;
@@ -42,11 +50,15 @@
 <body>
   <h1>Proof In Practice</h1>
   <h2>Where logic meets daily discipline</h2>
+  <h3 id="date"></h3>
   <div id="proof-box">
     <p id="proof">Loading today's proof...</p>
   </div>
 
   <script>
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const today Full = newDate(). toLocaleDateString(undefined, options);
+    document.getElementById(date').innerText = weekday;
     const proofs = [
       "Prove that the sum of two even numbers is even.",
       "Prove that the square of an odd number is odd.",
