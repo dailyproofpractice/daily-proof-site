@@ -54,7 +54,7 @@
     #hint {
       font-style: italic;
       color: #555;
-      display: none; /* Initially hidden */
+      display: none;
       margin-top: 1em;
     }
   </style>
@@ -66,7 +66,7 @@
   <div id="proof-box">
     <p id="proof">Loading today's proof...</p>
   </div>
-  <button id="hint-btn">Show Hint</button>
+  <button id="hint-button">Show Hint</button>
   <p id="hint">Loading hint...</p>
 
 
@@ -107,7 +107,7 @@
     
     document.getElementById("hint").innerText = hints[index];
 
-    document.getElementById('hint-btn').addEventListner('click', function() {
+    document.getElementById('hint-button').onclick = function() {
       const hintElement = document.getElementById('hint');
       if (hintElement.style.display === 'none' || hintElement.style.display === '') {
         hintElement.style.display = 'block';
