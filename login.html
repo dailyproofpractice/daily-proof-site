@@ -81,17 +81,18 @@
 
   <script>
     document.getElementById("login-form").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevents page refresh
+      event.preventDefault(); 
 
       const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
+      const password = document.getElementById("password").value;
 
-      if (username && password) {
-        localStorage.setItem("username", username); // Save to localStorage
-        window.location.href = "index.html"; // Go back to home page
+      const users = JSON.parse(localStorage.getItem("users") || "{}");
+
+      if (users[username] && users[username] === password) {
+        localStorage.setItem("username", username); 
+        window.location.href = "index.html"; 
       } else {
-        document.getElementById("error-message").textContent = "Please enter a valid username and password.";
-        document.getElementById("error-message").style.display = "block";
+        alert("Invalid username or password.");
       }
     });
   </script>
