@@ -72,13 +72,27 @@
     document.getElementById("signup-form").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      const username = document.getElementById("username").value;
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      
+      if (!username || !password) {
+        alert("Please fill in both fields.");
+        return;
+      }
 
-      // Save the username to localStorage
+      const users = JSON.parse(localStorage.getItem("users") || "{}");
+
+      if (users[username]) {
+        alert("Username already taken. Please choose another one.");
+        return;
+      }
+
+      users[username] = password;
+      localStorage.setItem("users", JSON.stringify(users));
+
       localStorage.setItem("username", username);
-
-      // Redirect to index.html
-      window.location.href = "index.html";
+    
+     window.location.href = "index.html";
     });
   </script>
 </body>
