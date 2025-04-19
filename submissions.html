@@ -110,8 +110,9 @@
   </div>
 
   <script>
-    const username = localStorage.getItem("username") || "guest";
-    const submissions = JSON.parse(localStorage.getItem(`submissions_${username}`)) || {};
+    const username = localStorage.getItem("username");
+    cost userKey = username || "guest";
+    const submissions = JSON.parse(localStorage.getItem(`submissions_${userKey}`)) || {};
     const container = document.getElementById("submissions-container");
 
     if (Object.keys(submissions).length === 0) {
@@ -141,7 +142,6 @@
       document.getElementById("sidebar").classList.toggle("open");
     });
 
-    const username = localStorage.getItem("username");
     if (username) {
       document.getElementById("welcome-message").innerText = `Welcome, ${username}!`;
       document.getElementById("guest-options").style.display = "none";
