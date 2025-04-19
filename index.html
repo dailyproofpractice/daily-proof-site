@@ -155,6 +155,7 @@
     <input type="file" id="proof-file" accept="image/*,.pdf" style="margin-top: 1em;" />
     <button id="submit-proof" style="margin-top: 1em;">Submit Proof</button>
   </div>
+  <div id="login-warning" style="color: #c00; font-weight: bold;"></div>
 
   <script>
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -223,7 +224,15 @@
     document.getElementById("submit-proof").addEventListener("click", function () {
       const text = document.getElementById("proof-text").value.trim();
       const fileInput = document.getElementById("proof-file");
-      const username = localStorage.getItem("username") || "guest";
+      const username = localStorage.getItem("username");
+
+      if (!username) { 
+        document.getElementById("submission-area").style.display = "none";
+        document.getElementById("login-warning").innerHTML = `
+          Please login to save your proof.<br>
+          <a href="login.html">Click here to log in</a>
+        `;
+      }
 
       if (!text && fileInput.files.length === 0) {
         alert("Please enter a proof or upload a file.");
