@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Past Submissions - Proof In Practice</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', serif;
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+      background-color: #fdfdfd;
+    }
+    h1 {
+      font-size: 2em;
+      color: #274e77;
+      text-align: center;
+    }
+    .submission {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1em;
+      margin-bottom: 1em;
+      background-color: #f3f7fa;
+    }
+    .submission p {
+      margin: 0.5em 0;
+    }
+    .submission img, .submission iframe {
+      max-width: 100%;
+      margin-top: 0.5em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Past Submissions</h1>
+  <div id="submissions-container">
+    <p>Loading your submissions...</p>
+  </div>
+
+  <script>
+    const username = localStorage.getItem("username") || "guest";
+    const submissions = JSON.parse(localStorage.getItem(`submissions_${username}`)) || {};
+    const container = document.getElementById("submissions-container");
+
+    if (Object.keys(submissions).length === 0) {
+      container.innerHTML = "<p>You have no submissions yet.</p>";
+    } else {
+      container.innerHTML = "";
+      Object.keys(submissions).reverse().forEach(date => {
+        const s = submissions[date];
+        const div = document.createElement("div");
+        div.className = "submission";
+        div.innerHTML = `
+          <p><strong>Date:</strong> ${date}</p>
+          <p><strong>Prompt:</strong> ${s.proofPrompt}</p>
+          <p><strong>Your Answer:</strong> ${s.text || "(no text)"}</p>
+          ${s.fileData ? (
+            s.fileData.startsWith("data:image")
+              ? `<img src="${s.fileData}" alt="Uploaded Proof Image" />`
+              : `<iframe src="${s.fileData}" width="100%" height="300px"></iframe>`
+          ) : ""}
+          <p><em>Submitted at ${s.timestamp}</em></p>
+        `;
+        container.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
