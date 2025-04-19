@@ -148,7 +148,12 @@
   </div>
   <button id="hint-button">Show Hint</button>
   <p id="hint">Loading hint...</p>
-
+  <div id="submission-area" style="margin-top: 2em;">
+    <h3>Submit Your Proof</h3>
+    <textarea id="proof-text" rows="5" placeholder="Write your proof here..." style="width: 100%; padding: 1em;"></textarea>
+    <input type="file" id="proof-file" accept="image/*,.pdf" style="margin-top: 1em;" />
+    <button id="submit-proof" style="margin-top: 1em;">Submit Proof</button>
+  </div>
 
   <script>
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -213,6 +218,46 @@
     document.getElementById("logout-button").addEventListener("click", () => {
       localStorage.removeItem("username");
       window.location.reload();
+    });
+    document.getElementById("submit-proof").addEventListener("click", function () {
+      const text = document.getElementById("proof-text").value.trim();
+      const fileInput = document.getElementById("proof-file");
+      const username = localStorage.getItem("username") || "guest";
+
+      if (!text && fileInput.files.length === 0) {
+        alert("Please enter a proof or upload a file.");
+        return;
+      }
+
+      const reader = new FileReader();
+      const dateKey = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+
+      const saveSubmission = (fileData = null) => {
+        const submission = {
+          text,
+          fileData,
+          timestamp: new Date().toLocaleString(),
+          proofPrompt: document.getElementById("proof").innerText
+        };
+
+        const key = `submissions_${username}`;
+        const submissions = JSON.parse(localStorage.getItem(key)) || {};
+        submissions[dateKey] = submission;
+
+        localStorage.setItem(key, JSON.stringify(submissions));
+        alert("Your proof has been saved!");
+        document.getElementById("proof-text").value = "";
+        fileInput.value = "";
+      };
+
+      if (fileInput.files.length > 0) {
+        reader.onload = function () {
+          saveSubmission(reader.result); // base64 string
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        saveSubmission();
+      }
     });
   </script>
 </body>
