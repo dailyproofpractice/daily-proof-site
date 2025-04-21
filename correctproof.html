@@ -73,9 +73,85 @@
     #submit-button:hover {
       background-color: #1e3d56;
     }
+    #menu-toggle {
+      font-size: 1.5em;
+      cursor: pointer;
+      padding: 7px;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      background: #274e77;
+      color: white;
+      border-radius: 5px;
+    }
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background-color: #e7ecef;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      transition: left 0.3s ease;
+      z-index: 1000;
+      padding: 0;
+    }
+    #sidebar.open {
+      left: 0;
+    }
+    #sidebar a, #sidebar button {
+      display: block;
+      margin: 1em 0;
+      text-decoration: none;
+      color: #274e77;
+      font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    #welcome-message {
+      font-size: 1.2em;
+      color: #000000;
+      margin-top: 1.25em;
+      margin-bottom: 1em;
+    }
+    #website-name {
+      font-family: 'Finger Paint', cursive;
+      font-size: 1.5em;
+      color: #274e77;
+      padding-left: 1.6em;
+      margin-top: 1em;
+    }
+    #sidebar-content {
+      padding-left: 1.5em;
+    }
+    #logout-button {
+      font-family: 'Times New Roman', serif;
+    }
   </style>
 </head>
 <body>
+  <div id="menu-toggle">☰</div>
+
+  <div id="sidebar">
+    <div id="sidebar-content">
+      <p id="website-name" style:"text-align: right;">Proof In Practice</p>
+        <p id="welcome-message">Welcome, Guest!</p>
+        <div id="guest-options">
+          <a href="login.html">Login</a>
+          <a href="signup.html">Sign Up</a>
+          <a href="index.html">Return to Proof</a>
+      </div>
+      <div id="user-options" style="display: none;">
+        <a href="submissions.html">Past Submissions</a>
+        <a href="index.html">Return to Proof</a>
+        <button id="logout-button">Log Out</button>
+      </div>
+    </div>
+  </div>
+
   <h1>Check Your Proof</h1>
 
   <div class="proof-container" id="proof-view">
@@ -178,6 +254,23 @@
 
     document.getElementById("rating-message").style.display = "block";
   });
+  document.getElementById("menu-toggle").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.toggle("open");
+    });
+
+    if (username) {
+      document.getElementById("welcome-message").innerText = `Welcome, ${username}!`;
+      document.getElementById("guest-options").style.display = "none";
+      document.getElementById("user-options").style.display = "block";
+    } else {
+      document.getElementById("welcome-message").innerText = `Welcome, Guest!`;
+      document.getElementById("guest-options").style.display = "block";
+      document.getElementById("user-options").style.display = "none";
+    }
+    document.getElementById("logout-button").addEventListener("click", () => {
+      localStorage.removeItem("username");
+      window.location.href = "index.html";
+    });
   </script>
 </body>
 </html>
