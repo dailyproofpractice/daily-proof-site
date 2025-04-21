@@ -137,7 +137,6 @@
   </div>
 
   <script>
-    <script>
   const username = localStorage.getItem("username");
   const userKey = username || "guest";
   const submissions = JSON.parse(localStorage.getItem(`submissions_${userKey}`)) || {};
@@ -210,7 +209,6 @@
     localStorage.removeItem("username");
     window.location.href = "index.html";
   });
-</script>
 
   </script>
 </body>
