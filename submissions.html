@@ -96,6 +96,19 @@
     .stars-static .star.selected {
       color: #274e77;
     }
+    .submission button {
+      display: inline-block;
+      margin-top: 0.5em;
+      padding: 0.5em 1em;
+      background-color: #274e77;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .submission button:hover {
+      background-color: #1e3d56;
+    }
 
   </style>
 </head>
@@ -149,6 +162,16 @@
           <p><em>Submitted at ${s.timestamp}</em></p>
         `;
         container.appendChild(div);
+          const checkBtn = document.createElement("button");
+          checkBtn.textContent = "Check Submission";
+          checkBtn.style.marginTop = "0.5em";
+          checkBtn.onclick = () => {
+    
+            window.location.href = `correctproof.html?date=${encodeURIComponent(date)}`;
+          };
+
+          div.appendChild(checkBtn);
+
         if (s.rating) {
          div.innerHTML += `
            <p><strong>Your Rating:</strong></p>
