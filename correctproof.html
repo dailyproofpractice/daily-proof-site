@@ -186,37 +186,7 @@
 
     const submission = submissionDate ? allSubmissions[submissionDate] : null;
 
-    const proofContainer = document.getElementById("proof-container");
-
-    if (submission) {
-      proofContainer.innerHTML = `
-        <div class="proof-columns">
-          <div class="proof-section">
-            <h3>Your Proof (${submissionDate})</h3>
-            <p>${submission.text || "(no text)"}</p>
-            ${submission.fileData ? (
-              submission.fileData.startsWith("data:image")
-                ? `<img src="${submission.fileData}" />`
-                : `<iframe src="${submission.fileData}" width="100%" height="300px"></iframe>`
-            ) : ""}
-          </div>
-          <div class="proof-section">
-            <h3>Correct Answer</h3>
-            <p>${submission.answer || "Answer not available."}</p>
-          </div>
-        </div>
-      `;
-  
-    } else {
-      proofContainer.innerHTML = `
-        <div class="proof-section">
-          <h3>Correct Answer</h3>
-          <p>No proof was submitted for this day.</p>
-        </div>
-      `;
-    }
-
-    const username = localStorage.getItem("username");
+    const proofContainer = document.getElementById("proof-view");
 
     const correctProofs = {
       "Prove that the sum of two even numbers is even.": "Let a = 2m and b = 2n where m and n are integers. Then a + b = 2m + 2n = 2(m + n), which is divisible by 2. So the sum is even.",
@@ -282,14 +252,14 @@
     const proofKey = `submissions_${username}`;
     const allSubs = JSON.parse(localStorage.getItem(proofKey) || '{}');
 
-    if (!allSubs[dateKey]) {
-      allSubs[dateKey] = {
+    if (!allSubs[submissionDate]) {
+      allSubs[submissionDate] = {
         proofPrompt: prompt,
         text: null
       };
     }
 
-    allSubs[dateKey].rating = selectedRating;
+    allSubs[submissionDate].rating = selectedRating;
     localStorage.setItem(proofKey, JSON.stringify(allSubs));
 
     document.getElementById("rating-message").style.display = "block";
