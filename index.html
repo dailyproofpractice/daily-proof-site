@@ -124,6 +124,20 @@
     #logout-button {
       font-family: 'Times New Roman', serif;
     }
+    #answer-button {
+      padding: 10px 20px;
+      background-color: #274e77;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 1em;
+      font-family: 'Times New Roman', serif;
+    }
+    #answer-button:hover {
+      background-color: #1e3d56;
+    }
   </style>
 </head>
 <body>
@@ -158,6 +172,7 @@
     <input type="file" id="proof-file" accept="image/*,.pdf" style="margin-top: 1em;" />
     <button id="submit-proof" style="margin-top: 1em;">Submit Proof</button>
   </div>
+  <button id="answer-button">Check My Proof</button>
   <div id="login-warning" style="color: #c00; font-weight: bold;"></div>
 
   <script>
@@ -273,6 +288,9 @@
         saveSubmission();
       }
     });
+    document.getElementById("answer-button").addEventListener("click", () => {
+      Window.location.href = "correctproof.html";
+    )};
   </script>
 </body>
 </html>
