@@ -183,6 +183,7 @@
     const allSubmissions = JSON.parse(localStorage.getItem(userKey)) || {};
 
     const submissionDate = getQueryParam("date");
+    const dateKey = submissionDate;
 
     const submission = submissionDate ? allSubmissions[submissionDate] : null;
 
