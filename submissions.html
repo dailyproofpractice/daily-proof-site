@@ -89,6 +89,14 @@
     #logout-button {
       font-family: 'Times New Roman', serif;
     }
+    .stars-static .star {
+      font-size: 1.5em;
+      color: #ccc;
+    }
+    .stars-static .star.selected {
+      color: #274e77;
+    }
+
   </style>
 </head>
 <body>
@@ -141,6 +149,16 @@
           <p><em>Submitted at ${s.timestamp}</em></p>
         `;
         container.appendChild(div);
+        if (s.rating) {
+         div.innerHTML += `
+           <p><strong>Your Rating:</strong></p>
+           <div class="stars-static">
+             ${[1, 2, 3, 4, 5].map(i => `
+               <span class="star ${parseInt(s.rating) >= i ? 'selected' : ''}">★</span>
+             `).join("")}
+           </div>
+         `;
+       }
       });
     }
 
