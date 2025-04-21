@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Check Your Proof | Proof In Practice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Schoolbell&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Times New Roman', serif;
+      margin: 2rem;
+      background-color: #fdfdfd;
+    }
+
+    h1 {
+      font-family: 'Finger Paint', cursive;
+      text-align: center;
+      color: #274e77;
+    }
+
+    .proof-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .box {
+      flex: 1;
+      border: 2px solid #274e77;
+      border-radius: 10px;
+      padding: 1rem;
+      background: #e7ecef;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .box h2 {
+      font-size: 1.3em;
+      margin-top: 0;
+    }
+
+    #rating-container {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      background: #e7ecef;
+      padding: 1em;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .star {
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #ccc;
+    }
+
+    .star.selected {
+      color: #274e77;
+    }
+  </style>
+</head>
+<body>
+  <h1>Check Your Proof</h1>
+
+  <div class="proof-container" id="proof-view">
+  </div>
+
+  <div id="rating-container">
+    <p style="margin: 0 0 0.5em;">Rate how you went:</p>
+    <div id="stars">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+  </div>
+
+  <script>
+    const username = localStorage.getItem("username");
+    const dateKey = new Date().toISOString().split("T")[0];
+    const proofKey = `submissions_${username}`;
+    const submissions = JSON.parse(localStorage.getItem(proofKey) || '{}');
+    const submission = submissions[dateKey];
+
+    const correctProofs = {
+      "Prove that the sum of two even numbers is even.": "Let a = 2m and b = 2n where m and n are integers. Then a + b = 2m + 2n = 2(m + n), which is divisible by 2. So the sum is even.",
+      "Prove that the square of an odd number is odd.": "Let a = 2n + 1. Then a^2 = (2n + 1)^2 = 4n^2 + 4n + 1 = 2(2n^2 + 2n) + 1, which is odd.",
+      "Prove that vertical angles are congruent.": "When two lines intersect, they form two pairs of vertical (opposite) angles. These pairs are equal in measure due to the equality of opposite angles.",
+      "Prove that if a = b and b = c, then a = c.": "By the transitive property of equality, if a = b and b = c, then a = c.",
+      "Prove that the base angles of an isosceles triangle are congruent.": "In an isosceles triangle, the two equal sides ensure the angles opposite them are equal by the Isosceles Triangle Theorem.",
+      "Prove that the product of two odd numbers is odd.": "Let a = 2m + 1 and b = 2n + 1. Then ab = (2m + 1)(2n + 1) = 4mn + 2m + 2n + 1 = 2(2mn + m + n) + 1 → odd.",
+      "Prove that if x = y, then x + z = y + z.": "By the addition property of equality, adding the same number z to both sides of x = y keeps them equal.",
+      "Prove that angles in a triangle sum to 180°.": "Draw a parallel line to one side of the triangle through the opposite vertex. Using alternate interior angles, you can show the angles sum to 180°.",
+      "Prove that multiplying both sides of an equation by the same number keeps the equation equal.": "By the multiplication property of equality, multiplying both sides of an equation by the same value preserves equality.",
+      "Prove that the square of an even number is even.": "Let a = 2n. Then a^2 = (2n)^2 = 4n^2 = 2(2n^2), which is divisible by 2. So it's even."
+    };
+
+    const prompt = submission?.proofPrompt || Object.keys(correctProofs)[new Date().getDate() % 10];
+    const correct = correctProofs[prompt];
+
+    const proofView = document.getElementById("proof-view");
+
+    if (submission) {
+      proofView.innerHTML = `
+        <div class="box">
+          <h2>Your Proof</h2>
+          <p>${submission.text || "You uploaded a file."}</p>
+        </div>
+        <div class="box">
+          <h2>Correct Proof</h2>
+          <p>${correct}</p>
+        </div>
+      `;
+    } else {
+      proofView.innerHTML = `
+        <div class="box" style="width: 100%;">
+          <h2>Correct Proof</h2>
+          <p>${correct}</p>
+        </div>
+      `;
+    }
+
+    // Star rating logic
+    const stars = document.querySelectorAll(".star");
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        const rating = star.dataset.value;
+        localStorage.setItem(`rating_${dateKey}_${username || "guest"}`, rating);
+        stars.forEach(s => {
+          s.classList.toggle("selected", s.dataset.value <= rating);
+        });
+      });
+    });
+
+    // Load previous rating
+    const savedRating = localStorage.getItem(`rating_${dateKey}_${username || "guest"}`);
+    if (savedRating) {
+      stars.forEach(s => {
+        s.classList.toggle("selected", s.dataset.value <= savedRating);
+      });
+    }
+  </script>
+</body>
+</html>
