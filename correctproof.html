@@ -47,6 +47,7 @@
       padding: 1em;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border: 2px solid #274e77;
     }
 
     .star {
@@ -57,6 +58,20 @@
 
     .star.selected {
       color: #274e77;
+    }
+    #submit-button {
+      padding: 10px 20px;
+      background-color: #274e77;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 1em;
+      font-family: 'Times New Roman', serif;
+    }
+    #submit-button:hover {
+      background-color: #1e3d56;
     }
   </style>
 </head>
@@ -75,7 +90,10 @@
       <span class="star" data-value="4">★</span>
       <span class="star" data-value="5">★</span>
     </div>
+    <button id="submit-rating" style="margin-top: 0.5em;">Submit Rating</button>
+    <p id="rating-message" style="color: green; display: none; margin-top: 0.5em;">Your rating has been saved!</p>
   </div>
+
 
   <script>
     const username = localStorage.getItem("username");
@@ -122,25 +140,44 @@
       `;
     }
 
-    // Star rating logic
-    const stars = document.querySelectorAll(".star");
-    stars.forEach(star => {
-      star.addEventListener("click", () => {
-        const rating = star.dataset.value;
-        localStorage.setItem(`rating_${dateKey}_${username || "guest"}`, rating);
-        stars.forEach(s => {
-          s.classList.toggle("selected", s.dataset.value <= rating);
-        });
+    let selectedRating = null;
+
+  const stars = document.querySelectorAll(".star");
+  stars.forEach(star => {
+    star.addEventListener("click", () => {
+      selectedRating = star.dataset.value;
+      stars.forEach(s => {
+        s.classList.toggle("selected", s.dataset.value <= selectedRating);
       });
     });
+  });
 
-    // Load previous rating
-    const savedRating = localStorage.getItem(`rating_${dateKey}_${username || "guest"}`);
-    if (savedRating) {
-      stars.forEach(s => {
-        s.classList.toggle("selected", s.dataset.value <= savedRating);
-      });
+  document.getElementById("submit-rating").addEventListener("click", () => {
+    if (!selectedRating) {
+      alert("Please select a rating first!");
+      return;
     }
+
+    if (!username) {
+      alert("You're not logged in — ratings are only saved for users.");
+      return;
+    }
+
+    const proofKey = `submissions_${username}`;
+    const allSubs = JSON.parse(localStorage.getItem(proofKey) || '{}');
+
+    if (!allSubs[dateKey]) {
+      allSubs[dateKey] = {
+        proofPrompt: prompt,
+        text: null
+      };
+    }
+
+    allSubs[dateKey].rating = selectedRating;
+    localStorage.setItem(proofKey, JSON.stringify(allSubs));
+
+    document.getElementById("rating-message").style.display = "block";
+  });
   </script>
 </body>
 </html>
