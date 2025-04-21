@@ -188,23 +188,6 @@
 
   container.appendChild(div);
 });
-
-
-          div.appendChild(checkBtn);
-
-        if (s.rating) {
-         div.innerHTML += `
-           <p><strong>Your Rating:</strong></p>
-           <div class="stars-static">
-             ${[1, 2, 3, 4, 5].map(i => `
-               <span class="star ${parseInt(s.rating) >= i ? 'selected' : ''}">★</span>
-             `).join("")}
-           </div>
-         `;
-       }
-      });
-    }
-
     document.getElementById("menu-toggle").addEventListener("click", () => {
       document.getElementById("sidebar").classList.toggle("open");
     });
