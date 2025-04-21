@@ -150,7 +150,6 @@
       const s = submissions[date];
       const div = document.createElement("div");
 
-      // file preview
       let fileHTML = "";
       if (s.fileData) {
         if (s.fileData.startsWith("data:image")) {
@@ -172,7 +171,6 @@
       const checkBtn = document.createElement("button");
       checkBtn.textContent = "Check Submission";
       checkBtn.onclick = () => {
-        // This redirects the user to the correct proof page with the date query parameter
         window.location.href = `correctproof.html?date=${encodeURIComponent(date)}`;
       };
       div.appendChild(checkBtn);
@@ -181,10 +179,15 @@
         const stars = [1, 2, 3, 4, 5].map(i =>
           `<span class="star ${parseInt(s.rating) >= i ? 'selected' : ''}">★</span>`
         ).join("");
-        div.innerHTML += `
-          <p><strong>Your Rating:</strong></p>
-          <div class="stars-static">${stars}</div>
-        `;
+       const ratingLabel = document.createElement("p");
+       ratingLabel.innerHTML = "<strong>Your Rating:</strong>";
+       div.appendChild(ratingLabel);
+
+       const starsDiv = document.createElement("div");
+       starsDiv.className = "stars-static";
+       starsDiv.innerHTML = stars;
+       div.appendChild(starsDiv);
+
       }
 
       container.appendChild(div);
