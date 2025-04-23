@@ -278,7 +278,7 @@
       }
 
       const reader = new FileReader();
-      const dateKey = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+      const dateKey = new Date().toISOString().split("T")[0]; // DD-MM-YYYY
 
       const saveSubmission = (fileData = null) => {
         const submission = {
@@ -307,7 +307,7 @@
         saveSubmission();
       }
     });
-    document.getElementById("answer-button").addEventListener("click", () => {
+    document.getElementById("submit-proof").addEventListener("click", () => {
       window.location.href = "correctproof.html";
     });
   </script>
